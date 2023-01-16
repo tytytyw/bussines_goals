@@ -241,11 +241,11 @@
             border: 1px solid rgba(149, 155, 174, 0.25);
         }
 
-        .lang .menu-handler:checked~.select {
+        .lang#lang_handler.active .select {
             display: flex;
         }
 
-        .menu-handler:checked+.arrow-icon svg {
+        .lang#lang_handler.active .arrow-icon svg {
             transform: rotate(180deg) translateY(50%);
             -webkit-transform: rotate(180deg) translateY(50%);
             -moz-transform: rotate(180deg) translateY(50%);
@@ -522,6 +522,17 @@
             z-index: 1;
             padding: 20px 20px 10px 10px;
             transform: translateY(100%);
+            min-width: 265px;
+            text-align: left;
+        }
+
+        #tooltip.tooltip_last {
+            left: auto;
+            right: -50px;
+        }
+
+        #button_add {
+            padding: 8px;
         }
 
         .cross {
@@ -586,11 +597,10 @@
                 <div class="color-theme__item orange" data-color="orange"></div>
                 <div class="color-theme__item green" data-color="green"></div>
             </div>
-            <label for="menu-handler" class="lang actions__item">
+            <label class="lang actions__item" id="lang_handler">
                 <span class="selected-lang">
                     ENG
                 </span>
-                <input class="menu-handler" type="checkbox" id="menu-handler">
 
                 <span class="arrow-icon">
                     <svg width="9" height="5" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -784,7 +794,7 @@
                                     fill="gray" />
                             </svg>
                         </div>
-                        <div class="tooltip" id="tooltip">
+                        <div class="tooltip tooltip_last" id="tooltip">
                             <!-- текст -->
                             <span>
                                 ТекстТекст ТекстТекстТекст Текст ТекстТекст ТекстТекст ТекстТекстТекст Текст ТекстТекст
@@ -1032,8 +1042,9 @@
         e.currentTarget.nextElementSibling.classList.add('active')
     })
     closeTooltipBtn.forEach(btn => btn.onclick = () => closeTooltips())
-    // document.querySelector('#close-tooltip').onclick = () => document.querySelector('#tooltip').classList.remove('active')
 
+    const lang_handler = document.querySelector('#lang_handler');
+    lang_handler.onclick = (e) => e.currentTarget.classList.toggle('active')
 </script>
 
 </html>
