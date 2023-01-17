@@ -472,11 +472,8 @@
             -o-border-radius: 10px;
         }
 
-
-
-
         body {
-            overflow-y: hidden;
+            overflow-y: scroll;
             scrollbar-width: 5px;
             height: 8px;
             scrollbar-color: #C7C8CA;
@@ -567,6 +564,65 @@
             justify-content: flex-start;
             text-align: left;
         }
+
+        /* table info */
+        .table.table_info {
+            padding-top: 0;
+        }
+
+        .table.table_info .table__wrapper {
+            border-color: #5D7D2B;
+        }
+
+        .table.table_info .table__wrapper .table__row .table__col.table__col_extra-mini {
+            flex-grow: 0;
+        }
+
+        .table.table_info .header__title {
+            padding: 7px 11px;
+            font-weight: 700;
+        }
+
+        .table.table_info .table__wrapper .table__row .table__col {
+            border-right: 0;
+            border-color: rgba(86, 86, 87, 0.5);
+        }
+
+        .table.table_info .table__wrapper .table__head {
+            padding: .5rem;
+        }
+
+        .table.table_info .group__title {
+            padding: 0 5px;
+        }
+
+        .col__letter {
+            font-weight: 700;
+        }
+
+        .col__letter.orange {
+            color: #ED8E00;
+        }
+
+        .col__letter.green {
+            color: #009C42;
+        }
+
+        .col__letter.red {
+            color: #EA0029
+        }
+
+        .col__letter.purple {
+            color: #8800B8;
+        }
+
+        .col__letter.yellow {
+            color: #D5DA00;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -631,7 +687,7 @@
         <div class="table__wrapper">
             <div class="table__header ">
                 <p class="header__title">Employee</p>
-                <p class="header__info">Line Manager: Full name</p>
+                <p class="header__info">{id_FullName}</p>
             </div>
 
             <!-- Шапка таблицы -->
@@ -655,7 +711,7 @@
                         <div class="tooltip" id="tooltip">
                             <!-- текст -->
                             <span>
-                                ТекстТекстТекстТекстТекстТекстТекстТекст
+                                {id_BusinessGoals_Information}
                             </span>
                             <div class="cross close-tooltip">
                                 <div class="line"></div>
@@ -685,7 +741,7 @@
                         <div class="tooltip" id="tooltip">
                             <!-- текст -->
                             <span>
-                                ТекстТекстТекстТекстТекстТекстТекстТекст
+                                {id_Weight_Information}
                             </span>
                             <div class="cross close-tooltip">
                                 <div class="line"></div>
@@ -708,7 +764,7 @@
                         <div class="tooltip" id="tooltip">
                             <!-- текст -->
                             <span>
-                                ТекстТекстТекстТекстТекстТекстТекстТекст
+                                {id_ActivitiesImplemented_Information}
                             </span>
                             <div class="cross close-tooltip">
                                 <div class="line"></div>
@@ -731,7 +787,7 @@
                         <div class="tooltip" id="tooltip">
                             <!-- текст -->
                             <span>
-                                ТекстТекстТекстТекстТекстТекстТекстТекст
+                                {id_ActualAchievements_Information}
                             </span>
                             <div class="cross close-tooltip">
                                 <div class="line"></div>
@@ -753,7 +809,7 @@
                         <div class="tooltip" id="tooltip">
                             <!-- текст -->
                             <span>
-                                ТекстТекстТекстТекстТекстТекстТекстТекст
+                                {id_SelfEvaluation_Information}
                             </span>
                             <div class="cross close-tooltip">
                                 <div class="line"></div>
@@ -775,7 +831,7 @@
                         <div class="tooltip" id="tooltip">
                             <!-- текст -->
                             <span>
-                                ТекстТекстТекстТекстТекстТекстТекстТекст
+                                {id_Evaluation_Information}
                             </span>
                             <div class="cross close-tooltip">
                                 <div class="line"></div>
@@ -796,12 +852,7 @@
                         </div>
                         <div class="tooltip tooltip_last" id="tooltip">
                             <!-- текст -->
-                            <span>
-                                ТекстТекст ТекстТекстТекст Текст ТекстТекст ТекстТекст ТекстТекстТекст Текст ТекстТекст
-                                ТекстТекст ТекстТекстТекст Текст ТекстТекст ТекстТекст ТекстТекстТекст Текст ТекстТекст
-                                ТекстТекст ТекстТекстТекст Текст ТекстТекст ТекстТекст ТекстТекстТекст Текст ТекстТекст
-                                ТекстТекст ТекстТекстТекст Текст ТекстТекст
-                            </span>
+                            <span>{id_Comments_Information}</span>
                             <div class="cross close-tooltip">
                                 <div class="line"></div>
                             </div>
@@ -826,6 +877,19 @@
 
         </div>
     </div>
+
+
+    <!-- table info -->
+    <div id="info-tables" class="hidden">
+        <!-- вторая таблица -->
+        <div id="table_two"></div>
+
+        <!-- третья таблица -->
+        <div id="table_three"></div>
+    </div>
+    </div>
+
+
 </body>
 <script>
     // цветовая тема
@@ -851,64 +915,20 @@
             col_6: `b`,
             col_7: ``
         },
-        // ряд 2
         {
-            col_1: `Страхование жизни и здоровья на 2021 год`,
-            col_2: `20%`,
-            col_3: `'Подписание договора страхования жизни с поставщиком
-Проведение тендера по страхованию здоровья и подписание договора
-Подготовка и проведение коммуникационных сессий для сотрудников по новым программам с помощью поставщика.`,
-            col_4: `'Проведен тендер на страхование здоровья, подписан договор, проведены сеансы связи. Кроме того, организована вакцинация 44 сотрудников.`,
-            col_5: `A`,
-            col_6: `B`,
-            col_7: ``
-        },
-        // ряд 3
-        {
-            col_1: `Пересмотр зарплат и индексация`,
-            col_2: `10%`,
-            col_3: `'Подготовить аналитику зарплаты для % запроса на прибавку зарплаты.
-Подготовить расчетную матрицу`,
-            col_4: `'Выполнено. Кроме того, участвовал в опросах о заработной плате в Korn Ferry и Mercer.`,
-            col_5: `B`,
-            col_6: `B`,
-            col_7: ``
-        },
-        // ряд 4
-        {
-            col_1: `Пересмотреть политику по компенсациям и льготам`,
-            col_2: `10%`,
-            col_3: `'НДФЛ 15% с 2021 г. – развиваем наш подход, практикуют другие компании
-'Добавить карту МИР, дополнительную оплату больничных и правила сверхурочной работы в полис C&B`,
-            col_4: `'«Политика пересмотрена.
-Коммуникация C&B улучшилась`,
-            col_5: `B`,
-            col_6: `B`,
-            col_7: ``
-        },
-        // ряд 5
-        {
-            col_1: `Бенефиты и аналитика`,
+            col_1: `KPI 2H 2020 расчет премии Уровни должностей и компетенции`,
             col_2: `15%`,
-            col_3: `Разработка системы инструментов вознаграждения - как идея - упоминание на собраниях команды
-Разработка HR дашборда (HR KPI – текучесть кадров)
-Идеи благополучия – финансовая грамотность, фитнес, лучшая зона (см. прикрепленные письма)
-Политика в отношении автомобилей и политика в отношении подержанных автомобилей обсуждают право собственности
-Подписка KIA Mobility для сотрудников`,
-            col_4: `'Неденежное вознаграждение в процессе (идея создана, требует реализации)
-Благополучие - Приложение Beffo, Договор в процессе подписания.`,
-            col_5: `C`,
-            col_6: `C`,
-            col_7: `программа нематериального вознаграждения не была реализована в срок`
-        },
-        // ряд 6
-        {
-            col_1: `Overall competencies evaluation`,
-            col_2: `15%`,
-            col_3: `See separate blank`,
-            col_4: `'See separate blank`,
-            col_5: `A`,
-            col_6: `B`,
+            col_3: `Собрать данные от руководителей отделов для расчета премий за второе полугодие 2020 года, согласованть с Президентом
+Изучите уровни должностей и компетенции в компании
+Изучить методологию Hay и платформу Pay Hub
+Проверить правильность грейдирования должностей
+Оценка уровня новых должностей, если требуется
+Оценка эффективности – форма в SAP HR, проверить возможность внедрения`,
+            col_4: `'Бонус KPI 2H 2020 рассчитан, оценка уровня позиции выполняется для каждого запроса.
+Оценка эффективности в SAP HR — не выполнена из-за низкого приоритета.
+Кроме того, была введена схема и стандарт продвижения (работает для финансов, послепродажного обслуживания, продукта)`,
+            col_5: `b`,
+            col_6: `b`,
             col_7: ``
         },
     ];
@@ -917,6 +937,100 @@
         weight: '100%',
         selfEvaluation: 'b',
         evaluation: 'b'
+    }
+
+    // вторая таблица
+    const tableTwoContent = {
+        title: 'Business goals’ achievement appraisal ',
+        rows: [
+            {
+                letter: { color: 'orange', text: 'S' },
+                collumn_2: 'Outstanding',
+                collumn_3: 'Превысил ожидания и достиг большего',
+                collumn_4: 'Exceeded the expectations and more',
+            },
+            {
+                letter: { color: 'yellow', text: 'A' },
+                collumn_2: 'Exceeds expectations',
+                collumn_3: 'Превысил ожидания в части достижения цели',
+                collumn_4: 'Exceeded the expectations of the objectives’ outcome',
+            },
+            {
+                letter: { color: 'green', text: 'B' },
+                collumn_2: 'Fully meets expectations',
+                collumn_3: 'Достиг поставленной цели в требуемом объеме',
+                collumn_4: 'Completed the objective as planned',
+            },
+
+            {
+                letter: { color: 'purple', text: 'C' },
+                collumn_2: 'Needs improvement',
+                collumn_3: 'Почти достиг поставленной цели, но не в требуемом объеме (не так, как было запланировано)',
+                collumn_4: 'Almost completed the objective but not as planned',
+            },
+            {
+                letter: { color: 'red', text: 'D' },
+                collumn_2: 'Does not meet',
+                collumn_3: 'Совсем не достиг поставленной цели',
+                collumn_4: 'Did not complete the objective at all',
+            },
+        ]
+    }
+
+    const tableThreeContent = {
+        title: 'Key factors that are taken in consideration when taking decision on the employees appraisal',
+        groups: [
+            {
+                title: 'Work quality and accuracy. Mistakes (if mistake is done, employee could correct it himself) are rare.',
+                rows: [
+                    {
+                        letter: { color: 'orange', text: 'S' },
+                        text: 'Keeps very high level of accuracy and quality even dealing first time with new and non standard tasks, able to find creative and effective ways of solving routine tasks and implement them '
+                    },
+                    {
+                        letter: { color: 'yellow', text: 'A' },
+                        text: 'Always very high level of accuracy and quality, able to perform tasks without team leader control'
+                    },
+                    {
+                        letter: { color: 'green', text: 'B' },
+                        text: 'Accuracy and quality are higher than expected, mistakes are very rare, some help can be needed'
+                    },
+                    {
+                        letter: { color: 'purple', text: 'C' },
+                        text: 'Not reliable quality, lack of accuracy, mistakes are often, control required'
+                    },
+                    {
+                        letter: { color: 'red', text: 'D' },
+                        text: 'Poor quality, constant mistakes, control is always required'
+                    },
+                ]
+            },
+            {
+                title: 'The volume and scope of work employee is able to manage',
+                rows: [
+                    {
+                        letter: { color: 'orange', text: 'S' },
+                        text: 'Very quick. Constantly is doing more tasks than expected'
+                    },
+                    {
+                        letter: { color: 'yellow', text: 'A' },
+                        text: 'Work quickly, often makes more tasks than expected'
+                    },
+                    {
+                        letter: { color: 'green', text: 'B' },
+                        text: 'Usually manages his scope of work'
+                    },
+                    {
+                        letter: { color: 'purple', text: 'C' },
+                        text: 'Works slowly, requires reminding about terms and identify more urgent tasks'
+                    },
+                    {
+                        letter: { color: 'red', text: 'D' },
+                        text: 'Works slowly does not manage with the set volume of work'
+                    },
+                ]
+            },
+        ]
     }
 
 
@@ -1009,7 +1123,7 @@
                 </div>
                 <div class="table__col table__col_medium"></div>
                 <div class="table__col table__col_extra-mini vertical-center flex text-center">
-                    <a href="button_sum-info" id="button_sum-info"
+                    <span id="button_sum-info" onclick="onSumInfoClick()"
                         class="button button_sum-info button_theme-color flex text-center">
                         <svg class="info__icon" width="12" height="12" viewBox="0 0 12 12" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -1017,12 +1131,14 @@
                                 d="M6 0C2.69147 0 0 2.69147 0 6C0 9.30853 2.69147 12 6 12C9.30853 12 12 9.30853 12 6C12 2.69147 9.30853 0 6 0ZM6 2.50003C6.27603 2.50003 6.49997 2.72397 6.49997 3C6.49997 3.27603 6.27603 3.49997 6 3.49997C5.72397 3.49997 5.50003 3.27603 5.50003 3C5.50003 2.72397 5.72397 2.50003 6 2.50003ZM7.125 9.49997H4.875C4.59851 9.49997 4.37503 9.27603 4.37503 9C4.37503 8.72397 4.59851 8.50003 4.875 8.50003H5.50003V5.50003H5.12503C4.84854 5.50003 4.62497 5.276 4.62497 4.99997C4.62497 4.72403 4.84854 4.5 5.12503 4.5H6C6.27649 4.5 6.49997 4.72403 6.49997 4.99997V8.50003H7.125C7.40149 8.50003 7.62497 8.72397 7.62497 9C7.62497 9.27603 7.40149 9.49997 7.125 9.49997Z"
                                 fill="gray" />
                         </svg>
-                    </a>
+                    </span>
                 </div>
             </div>
             `;
         return footer
     }
+
+    const onSumInfoClick = () => document.querySelector('#info-tables').classList.toggle('hidden')
 
 
     tableContent.forEach(content => tableWrap.appendChild(tableRowTemplate(content)));
@@ -1045,6 +1161,92 @@
 
     const lang_handler = document.querySelector('#lang_handler');
     lang_handler.onclick = (e) => e.currentTarget.classList.toggle('active')
+
+    // table 2 and 3
+
+    const tableTwoRowTemplate = (rowContent) => {
+        const row = document.createElement('div');
+        row.className = 'table__row';
+        row.innerHTML = `
+            <div class="table__col table__col_extra-mini container vertical-center">
+                <p class="col__text col__letter ${rowContent.letter.color}">
+                    ${rowContent.letter.text}
+                </p>
+            </div>
+            <div class="table__col table__col_medium vertical-center">
+                <p class="col__text text_left">${rowContent.collumn_2}</p>
+            </div>
+            <div class="table__col table__col_large vertical-center">
+                <p class="col__text">
+                    ${rowContent.collumn_3}
+                </p>
+            </div>
+            <div class="table__col table__col_large vertical-center">
+                <p class="col__text">${rowContent.collumn_4}
+                </p>
+            </div>
+        `;
+        return row
+    };
+    const fillTableTwo = (tableContent) => {
+        const parent = document.querySelector('#table_two');
+        parent.innerHTML = `
+        <div class="table table_info">
+            <div class="table__wrapper">
+                <p class="header__title">${tableContent.title}</p>
+                <div class="table__body"></div>
+            </div>
+        </div>`;
+        const tableBody = parent.querySelector('.table__body');
+        tableContent.rows.forEach(row => tableBody.appendChild(tableTwoRowTemplate(row)))
+    };
+    fillTableTwo(tableTwoContent);
+
+    // table_3
+    const tableThreeRowTemplate = (rowContent) => {
+        const row = document.createElement('div');
+        row.className = 'table__row';
+        row.innerHTML = `
+            <div class="table__col table__col_extra-mini container vertical-center">
+                <p class="col__text col__letter ${rowContent.letter.color}">
+                    ${rowContent.letter.text}
+                </p>
+            </div>
+            <div class="table__col table__col_medium vertical-center">
+                <p class="col__text text_left">${rowContent.text}</p>
+            </div>
+    `;
+        return row
+    };
+    const tableGroupTemplate = (groupContent) => {
+        const groupWrap = document.createElement('div');
+        groupWrap.innerHTML = `
+            <div class="table__head">
+                <div class="table__row">
+                    <p class="group__title">${groupContent.title}</p>
+                </div>
+            </div>
+
+            <div class="table__body"></div>
+        `;
+        const rowsWrap = groupWrap.querySelector('.table__body');
+        groupContent.rows.forEach(row => rowsWrap.appendChild(tableThreeRowTemplate(row)));
+        return groupWrap
+    };
+    fillTableThree = (tableContent) => {
+        const parent = document.querySelector('#table_three');
+        parent.innerHTML = `
+            <div class="table table_info">
+                <div class="table__wrapper">
+                    <p class="header__title">${tableContent.title}</p>
+                </div>
+            </div>
+        `;
+        const tableContentWrap = parent.querySelector('.table__wrapper');
+        tableContent.groups.forEach(group => tableContentWrap.appendChild(tableGroupTemplate(group)))
+
+    }
+    fillTableThree(tableThreeContent)
 </script>
 
 </html>
